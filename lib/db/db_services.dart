@@ -4,10 +4,10 @@ import 'package:path/path.dart'; // Import path package for joining paths
 
 class DatabaseHelper {
   // Table and column names
-  String contactTable = 'contact_table';
-  String colId = 'id';
-  String colContactName = 'name';
-  String colContactNumber = 'number';
+  static String contactTable = 'contact_table';
+  static String colId = 'id';
+  static String colContactName = 'name';
+  static String colContactNumber = 'number';
 
   // Private constructor to create an instance of DatabaseHelper Class
   DatabaseHelper._createInstance();
@@ -113,22 +113,5 @@ class DatabaseHelper {
       contactList.add(TContact.fromMapObject(contactMapList[i]));
     }
     return contactList;
-  }
-
-  Future<TContact?> getContactByNameAndNumber(
-      String name, String number) async {
-    Database? db = await this.database;
-    List<Map<String, dynamic>> result = await db!.query(
-      contactTable,
-      where: '$colContactName = ? AND $colContactNumber = ?',
-      whereArgs: [name, number],
-    );
-    if (result.isNotEmpty) {
-      // If there is a result, convert it into a TContact object and return it
-      return TContact.fromMapObject(result.first);
-    } else {
-      // If no result found, return null
-      return null;
-    }
   }
 }

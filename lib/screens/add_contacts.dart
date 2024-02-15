@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AddContacts extends StatefulWidget {
-  const AddContacts({Key? key}) : super(key: key);
+  const AddContacts({super.key});
 
   @override
   State<AddContacts> createState() => _AddContactsState();
@@ -55,17 +55,9 @@ class _AddContactsState extends State<AddContacts> {
     }
 
     if (!contactExists) {
-      // Check if the contact already exists in the database
-      TContact? existingContact = await databaseHelper
-          .getContactByNameAndNumber(newContact.name, newContact.number);
-
-      if (existingContact == null) {
-        await databaseHelper.insertContact(newContact);
-        Fluttertoast.showToast(msg: 'Contact added successfully');
-        showList();
-      } else {
-        Fluttertoast.showToast(msg: 'Contact already exists');
-      }
+      await databaseHelper.insertContact(newContact);
+      Fluttertoast.showToast(msg: 'Contact added successfully');
+      showList();
     } else {
       Fluttertoast.showToast(msg: 'Contact already exists');
     }
@@ -73,14 +65,13 @@ class _AddContactsState extends State<AddContacts> {
 
   @override
   void initState() {
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       showList();
     });
     showList();
     super.initState();
   }
 
-  @override
   Widget build(BuildContext context) {
     if (contactList == null) {
       contactList = [];

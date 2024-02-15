@@ -12,6 +12,8 @@ class TContact {
   String get number => _number!;
   String get name => _name!;
 
+  get displayName => null;
+
   @override
   String toString() {
     return 'Contact:{id: $_id, name: $_name, number: $_number}';

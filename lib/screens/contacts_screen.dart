@@ -5,6 +5,7 @@ import 'package:diva/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
 
 class ContactsPage extends StatefulWidget {
   const ContactsPage({super.key});
@@ -16,8 +17,11 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPageState extends State<ContactsPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
+  List<Contact> _userSelectedContacts = [];
   DatabaseHelper _databaseHelper = DatabaseHelper();
   TextEditingController searchController = TextEditingController();
+
+  // const String contactTable ;
   @override
   void initState() {
     super.initState();
@@ -120,7 +124,7 @@ class _ContactsPageState extends State<ContactsPage> {
                       autofocus: true,
                       controller: searchController,
                       decoration: const InputDecoration(
-                        labelText: "search contact",
+                        labelText: "Search Contact",
                         prefixIcon: Icon(Icons.search),
                       ),
                     ),
@@ -175,12 +179,32 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   void _addContact(TContact newContact) async {
-    int? result = await _databaseHelper.insertContact(newContact);
-    if (result != 0) {
-      Fluttertoast.showToast(msg: 'Contact added successfully');
+    bool contactExists = await _contactExists(newContact);
+
+    if (!contactExists) {
+      int? result = await _databaseHelper.insertContact(newContact);
+      if (result != null && result > 0) {
+        Fluttertoast.showToast(msg: 'Contact added successfully');
+      } else {
+        Fluttertoast.showToast(msg: 'Failed to add contact');
+      }
     } else {
-      Fluttertoast.showToast(msg: 'Failed to add contact');
+      Fluttertoast.showToast(msg: 'Contact already exists');
     }
+
     Navigator.of(context).pop(true);
+  }
+
+  Future<bool> _contactExists(TContact contact) async {
+    Database? db = await _databaseHelper.database;
+
+    var existingContacts = await db?.query(
+      DatabaseHelper.contactTable,
+      where:
+          '${DatabaseHelper.colContactNumber} = ? AND ${DatabaseHelper.colContactName} = ?',
+      whereArgs: [contact.number, contact.name],
+    );
+
+    return existingContacts != null && existingContacts.isNotEmpty;
   }
 }
