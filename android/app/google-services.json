@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "841235444956",
+    "project_id": "divaguard-d973f",
+    "storage_bucket": "divaguard-d973f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841235444956:android:fc4341289241d596427019",
+        "android_client_info": {
+          "package_name": "com.example.diva_guard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQkDwARyLF7Kaz_-cLQth4F7xeFozcoV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
