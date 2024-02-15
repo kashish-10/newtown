@@ -1,4 +1,5 @@
 import 'package:diva/provider/auth_provider.dart';
+import 'package:diva/screens/settings.dart';
 import 'package:diva/screens/user_info_screen.dart';
 import 'package:diva/utils/utils.dart';
 import 'package:diva/widgets/custom_button.dart';
@@ -135,21 +136,30 @@ class _OtpScreenState extends State<OtpScreen> {
   void verifyOtp(BuildContext context, String userOtp) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     ap.verifyOtp(
-        context: context,
-        verificationId: widget.verificationId,
-        userOtp: userOtp,
-        onSuccess: () {
-          ap.checkExistingUser().then((value) async {
-            if (value == true) {
-            } else {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const UserInfoScreen()),
-                  (route) => false);
-            }
-          });
+      context: context,
+      verificationId: widget.verificationId,
+      userOtp: userOtp,
+      onSuccess: () {
+        ap.checkExistingUser().then((value) async {
+          if (value == true) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SettingsPage(),
+              ),
+            );
+          } else {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UserInfoScreen(),
+              ),
+              (route) => false,
+            );
+          }
         });
+      },
+    );
   }
 }
 

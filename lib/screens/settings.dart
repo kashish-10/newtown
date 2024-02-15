@@ -1,5 +1,8 @@
 import 'package:diva/screens/add_contacts.dart';
 import 'package:diva/screens/contacts_screen.dart';
+import 'package:diva/screens/home_screen.dart';
+import 'package:diva/screens/location_update.dart';
+import 'package:diva/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -38,7 +41,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          '(+91)123 456 7890',
+                          '(+91) 123 456 7890',
                           style: TextStyle(fontSize: 16),
                         ),
                         SizedBox(height: 4),
@@ -127,6 +130,10 @@ class SettingsPage extends StatelessWidget {
             title: const Text('Logout'),
             onTap: () {
               // Add logout functionality here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WelcomeScreen()),
+              );
             },
           ),
         ],
@@ -150,19 +157,19 @@ class EditEmergencyContactsPage extends StatelessWidget {
   }
 }
 
-class TimelyLocationUpdatePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Timely Location Update'),
-      ),
-      body: const Center(
-        child: Text('Timely Location Update Page'),
-      ),
-    );
-  }
-}
+// class TimelyLocationUpdatePage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Timely Location Update'),
+//       ),
+//       body: const Center(
+//         child: Text('Timely Location Update Page'),
+//       ),
+//     );
+//   }
+// }
 
 class SafeShakePage extends StatelessWidget {
   @override
