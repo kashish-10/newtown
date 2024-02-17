@@ -1,4 +1,5 @@
 import 'package:diva/screens/add_contacts.dart';
+import 'package:diva/screens/fakecall/fakecall.dart';
 import 'package:diva/screens/location_update.dart';
 import 'package:diva/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
@@ -84,17 +85,6 @@ class SettingsPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => const TimelyLocationUpdatePage()),
-              );
-            },
-          ),
-          const Divider(color: Colors.grey),
-          ListTile(
-            leading: const Icon(Icons.shield),
-            title: const Text('Safe Shake'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SafeShakePage()),
               );
             },
           ),
@@ -210,21 +200,21 @@ class SafeAudioPage extends StatelessWidget {
   }
 }
 
-class FakeCallPage extends StatelessWidget {
-  const FakeCallPage({super.key});
+// class FakeCallPage extends StatelessWidget {
+//   const FakeCallPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Fake Call'),
-      ),
-      body: const Center(
-        child: Text('Fake Call Page'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Fake Call'),
+//       ),
+//       body: const Center(
+//         child: Text('Fake Call Page'),
+//       ),
+//     );
+//   }
+// }
 
 class TriggerPage extends StatelessWidget {
   const TriggerPage({super.key});
