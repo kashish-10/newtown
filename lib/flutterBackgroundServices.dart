@@ -93,7 +93,7 @@ void onStart(ServiceInstance service) async {
             shakeThresholdGravity: 7,
             shakeSlopTimeMS: 500,
             shakeCountResetTime: 3000,
-            minimumShakeCount: 1,
+            minimumShakeCount: 5,
             onPhoneShake: () async {
               if (await Vibration.hasVibrator() ?? false) {
                 print("Test 2");
