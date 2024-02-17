@@ -35,30 +35,32 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   filterContacts() {
-    List<Contact> contacts = [];
-    contacts.addAll(contacts);
+    List<Contact> filteredList =
+        List<Contact>.from(contacts); // Create a new list
 
     if (searchController.text.isNotEmpty) {
-      contacts.retainWhere((element) {
-        String searchterm = searchController.text.toLowerCase();
-        String searchtermFlatten = flattenPhoneNumber(searchterm);
+      String searchterm = searchController.text.toLowerCase();
+      String searchtermFlatten = flattenPhoneNumber(searchterm);
+
+      filteredList.retainWhere((element) {
         String? contactName = element.displayName?.toLowerCase();
         bool nameMatch = contactName?.contains(searchterm) ?? false;
-        if (nameMatch == true) {
-          return true;
-        }
-        if (searchtermFlatten.isEmpty) {
-          return false;
-        }
+
+        if (nameMatch) return true;
+
+        if (searchtermFlatten.isEmpty) return false;
+
         var phone = element.phones!.firstWhere((p) {
           String phnFlattened = flattenPhoneNumber(p.value!);
           return phnFlattened.contains(searchtermFlatten);
         });
-        return phone.value != null;
+
+        return phone != null;
       });
     }
+
     setState(() {
-      contactsFiltered = contacts;
+      contactsFiltered = filteredList;
     });
   }
 
@@ -94,11 +96,14 @@ class _ContactsPageState extends State<ContactsPage> {
     }
   }
 
-  Future getAllContacts() async {
-    List<Contact> contacts =
+  Future<void> getAllContacts() async {
+    print("Fetching contacts...");
+    List<Contact> fetchedContacts =
         await ContactsService.getContacts(withThumbnails: false);
+    print("Fetched ${fetchedContacts.length} contacts");
+
     setState(() {
-      contacts = contacts;
+      contacts = fetchedContacts;
     });
   }
 
