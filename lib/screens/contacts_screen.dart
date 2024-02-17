@@ -17,8 +17,8 @@ class ContactsPage extends StatefulWidget {
 class _ContactsPageState extends State<ContactsPage> {
   List<Contact> contacts = [];
   List<Contact> contactsFiltered = [];
-  List<Contact> _userSelectedContacts = [];
-  DatabaseHelper _databaseHelper = DatabaseHelper();
+  final List<Contact> _userSelectedContacts = [];
+  final DatabaseHelper _databaseHelper = DatabaseHelper();
   TextEditingController searchController = TextEditingController();
 
   // const String contactTable ;
@@ -35,11 +35,11 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   filterContacts() {
-    List<Contact> _contacts = [];
-    _contacts.addAll(contacts);
+    List<Contact> contacts = [];
+    contacts.addAll(contacts);
 
     if (searchController.text.isNotEmpty) {
-      _contacts.retainWhere((element) {
+      contacts.retainWhere((element) {
         String searchterm = searchController.text.toLowerCase();
         String searchtermFlatten = flattenPhoneNumber(searchterm);
         String? contactName = element.displayName?.toLowerCase();
@@ -58,7 +58,7 @@ class _ContactsPageState extends State<ContactsPage> {
       });
     }
     setState(() {
-      contactsFiltered = _contacts;
+      contactsFiltered = contacts;
     });
   }
 
@@ -95,10 +95,10 @@ class _ContactsPageState extends State<ContactsPage> {
   }
 
   Future getAllContacts() async {
-    List<Contact> _contacts =
+    List<Contact> contacts =
         await ContactsService.getContacts(withThumbnails: false);
     setState(() {
-      contacts = _contacts;
+      contacts = contacts;
     });
   }
 
@@ -111,10 +111,10 @@ class _ContactsPageState extends State<ContactsPage> {
   @override
   Widget build(BuildContext context) {
     bool isSearching = searchController.text.isNotEmpty;
-    bool listItemExist = (contactsFiltered.length > 0 || contacts.length > 0);
+    bool listItemExist = (contactsFiltered.isNotEmpty || contacts.isNotEmpty);
     return Scaffold(
-      body: contacts.length == 0
-          ? Center(child: CircularProgressIndicator())
+      body: contacts.isEmpty
+          ? const Center(child: CircularProgressIndicator())
           : SafeArea(
               child: Column(
                 children: [
@@ -140,12 +140,12 @@ class _ContactsPageState extends State<ContactsPage> {
                                   ? contactsFiltered[index]
                                   : contacts[index];
                               var displayName = contact.displayName ?? '';
-                              var len = displayName?.length ??
+                              var len = displayName.length ??
                                   0; // Using the provided method
                               return ListTile(
                                 title: Text(len != 0 ? displayName : 'No Name'),
                                 leading: contact.avatar != null &&
-                                        contact.avatar!.length > 0
+                                        contact.avatar!.isNotEmpty
                                     ? CircleAvatar(
                                         backgroundImage:
                                             MemoryImage(contact.avatar!),
@@ -154,7 +154,7 @@ class _ContactsPageState extends State<ContactsPage> {
                                         child: Text(contact.initials()),
                                       ),
                                 onTap: () {
-                                  if (contact.phones!.length > 0) {
+                                  if (contact.phones!.isNotEmpty) {
                                     final String phoneNum =
                                         contact.phones!.elementAt(0).value!;
                                     final String name = contact.displayName!;
@@ -170,7 +170,7 @@ class _ContactsPageState extends State<ContactsPage> {
                           ),
                         )
                       : Container(
-                          child: Text("Searching"),
+                          child: const Text("Searching"),
                         )
                 ],
               ),

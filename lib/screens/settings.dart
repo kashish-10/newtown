@@ -1,11 +1,11 @@
 import 'package:diva/screens/add_contacts.dart';
-import 'package:diva/screens/contacts_screen.dart';
-import 'package:diva/screens/home_screen.dart';
 import 'package:diva/screens/location_update.dart';
 import 'package:diva/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,8 +26,15 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage('assets/front_image.jpeg'),
+                      backgroundImage: NetworkImage(
+                          'https://media.istockphoto.com/vectors/purple-user-icon-in-the-circle-a-solid-gradient-vector-id1095289632?k=20&m=1095289632&s=612x612&w=0&h=_glHdsV95Q3uZHTpFNIeaJpzGMpy6fplJP5G6YUgfmk='),
                     ),
+                    // Positioned(
+                    //   child: IconButton(
+                    //     onPressed: () {},
+                    //     icon: Icon(Icons.add_a_photo),
+                    //   ),
+                    // ),
                     SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +83,7 @@ class SettingsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TimelyLocationUpdatePage()),
+                    builder: (context) => const TimelyLocationUpdatePage()),
               );
             },
           ),
@@ -87,7 +94,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SafeShakePage()),
+                MaterialPageRoute(builder: (context) => const SafeShakePage()),
               );
             },
           ),
@@ -98,7 +105,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SafeAudioPage()),
+                MaterialPageRoute(builder: (context) => const SafeAudioPage()),
               );
             },
           ),
@@ -109,7 +116,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => FakeCallPage()),
+                MaterialPageRoute(builder: (context) => const FakeCallPage()),
               );
             },
           ),
@@ -120,7 +127,7 @@ class SettingsPage extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TriggerPage()),
+                MaterialPageRoute(builder: (context) => const TriggerPage()),
               );
             },
           ),
@@ -132,7 +139,7 @@ class SettingsPage extends StatelessWidget {
               // Add logout functionality here
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                MaterialPageRoute(builder: (context) => const WelcomeScreen()),
               );
             },
           ),
@@ -143,19 +150,19 @@ class SettingsPage extends StatelessWidget {
 }
 
 // Sample pages for each feature
-class EditEmergencyContactsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edit Emergency Contacts'),
-      ),
-      body: const Center(
-        child: Text('Edit Emergency Contacts Page'),
-      ),
-    );
-  }
-}
+// class EditEmergencyContactsPage extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Edit Emergency Contacts'),
+//       ),
+//       body: const Center(
+//         child: Text('Edit Emergency Contacts Page'),
+//       ),
+//     );
+//   }
+// }
 
 // class TimelyLocationUpdatePage extends StatelessWidget {
 //   @override
@@ -172,6 +179,8 @@ class EditEmergencyContactsPage extends StatelessWidget {
 // }
 
 class SafeShakePage extends StatelessWidget {
+  const SafeShakePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,6 +195,8 @@ class SafeShakePage extends StatelessWidget {
 }
 
 class SafeAudioPage extends StatelessWidget {
+  const SafeAudioPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -200,6 +211,8 @@ class SafeAudioPage extends StatelessWidget {
 }
 
 class FakeCallPage extends StatelessWidget {
+  const FakeCallPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -214,6 +227,8 @@ class FakeCallPage extends StatelessWidget {
 }
 
 class TriggerPage extends StatelessWidget {
+  const TriggerPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -230,6 +245,6 @@ class TriggerPage extends StatelessWidget {
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(primarySwatch: Colors.purple),
-    home: SettingsPage(),
+    home: const SettingsPage(),
   ));
 }

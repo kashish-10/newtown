@@ -1,7 +1,6 @@
 import 'package:diva/provider/auth_provider.dart';
 import 'package:diva/screens/home_screen.dart';
 import 'package:diva/screens/register_screen.dart';
-import 'package:diva/screens/settings.dart';
 import 'package:diva/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -53,7 +52,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ? Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SettingsPage()))
+                                  builder: (context) => const HomePage()))
                           : Navigator.push(
                               context,
                               MaterialPageRoute(

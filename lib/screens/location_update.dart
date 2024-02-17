@@ -22,7 +22,7 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
   LocationPermission? permission;
   _getPermission() async => await [Permission.sms].request();
   _isPermissionGranted() async => await Permission.sms.status.isGranted;
-  _sendSms(String phoneNumber, String message, {int? simSlot}) async {
+  _sendSms(String phoneNumber, String message) async {
     SmsStatus result = await BackgroundSms.sendMessage(
         phoneNumber: phoneNumber, message: message, simSlot: 1);
     if (result == SmsStatus.sent) {
@@ -50,7 +50,7 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
         .then((Position position) {
       setState(() {
         _currentPosition = position;
-        print(_currentPosition!.latitude);
+        print(_currentPosition.latitude);
         _getAddressFromLatLon();
       });
     }).catchError((e) {
@@ -76,12 +76,12 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
     // String recipients = "8278681942";
     List<TContact> contactList = await DatabaseHelper().getContactList();
     String messageBody =
-        "https://maps.google.com/?daddr=${_currentPosition?.latitude},${_currentPosition?.longitude}";
+        "https://maps.google.com/?daddr=${_currentPosition!.latitude},${_currentPosition!.longitude}";
     // String messageBody = "https://maps.google.com/?daddr=25.7821353,84.7102497";
     if (await _isPermissionGranted()) {
-      contactList.forEach((element) {
-        _sendSms("${element.number}", "I am in trouble $messageBody");
-      });
+      for (var element in contactList) {
+        _sendSms(element.number, "I am in trouble $messageBody");
+      }
       // _sendSms(recipients, "I am in trouble $messageBody");
     } else {
       Fluttertoast.showToast(msg: "Something is wrong. Please try again.");
@@ -90,7 +90,8 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
 
   void startTimelyLocationUpdates() {
     // Start timer to call getAndSendSms function every 15 minutes
-    Timer.periodic(Duration(minutes: 15), (timer) {
+    getAndSendSms();
+    Timer.periodic(const Duration(minutes: 15), (timer) {
       getAndSendSms();
     });
   }
@@ -106,7 +107,7 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Timely Location Update'),
+        title: const Text('Timely Location Update'),
       ),
       body: Center(
         child: Column(
@@ -117,15 +118,15 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
                 // Add function to send location updates
                 getAndSendSms();
               },
-              child: Text('Send Location Update'),
+              child: const Text('Send Location Update'),
             ),
-            SizedBox(height: 20), // Adding some spacing between buttons
+            const SizedBox(height: 20), // Adding some spacing between buttons
             ElevatedButton(
               onPressed: () {
                 // Add function to start timely location updates
                 startTimelyLocationUpdates();
               },
-              child: Text('Timely Location Update'),
+              child: const Text('Timely Location Update'),
             ),
           ],
         ),

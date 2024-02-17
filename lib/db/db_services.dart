@@ -17,9 +17,7 @@ class DatabaseHelper {
 
   // Singleton factory constructor
   factory DatabaseHelper() {
-    if (_databaseHelper == null) {
-      _databaseHelper = DatabaseHelper._createInstance();
-    }
+    _databaseHelper ??= DatabaseHelper._createInstance();
     return _databaseHelper!;
   }
 
@@ -28,9 +26,7 @@ class DatabaseHelper {
 
   // Get method for accessing the database
   Future<Database?> get database async {
-    if (_database == null) {
-      _database = await initializeDatabase();
-    }
+    _database ??= await initializeDatabase();
     return _database;
   }
 
@@ -60,7 +56,7 @@ class DatabaseHelper {
 
   // Method to get list of contact maps from database
   Future<List<Map<String, dynamic>>?> getContactMapList() async {
-    Database? db = await this.database;
+    Database? db = await database;
     // Raw query to select all columns from contact table
     List<Map<String, dynamic>>? result =
         await db?.rawQuery('SELECT * FROM $contactTable ORDER BY $colId ASC');
@@ -69,7 +65,7 @@ class DatabaseHelper {
 
   // Method to insert a contact into database
   Future<int?> insertContact(TContact contact) async {
-    Database? db = await this.database;
+    Database? db = await database;
     // Insert the contact into database
     var result = await db?.insert(contactTable, contact.toMap());
     return result;
@@ -77,7 +73,7 @@ class DatabaseHelper {
 
   // Method to update a contact in database
   Future<int?> updateContact(TContact contact) async {
-    Database? db = await this.database;
+    Database? db = await database;
     // Update the contact in database
     var result = await db?.update(contactTable, contact.toMap(),
         where: '$colId = ?', whereArgs: [contact.id]);
@@ -86,7 +82,7 @@ class DatabaseHelper {
 
   // Method to delete a contact from database
   Future<int?> deleteContact(int id) async {
-    Database? db = await this.database;
+    Database? db = await database;
     // Delete the contact from database
     int? result =
         await db?.rawDelete('DELETE FROM $contactTable WHERE $colId = ?', [id]);
@@ -95,7 +91,7 @@ class DatabaseHelper {
 
   // Method to get total number of contacts in database
   Future<int> getCount() async {
-    Database? db = await this.database;
+    Database? db = await database;
     // Raw query to get count of all rows in contact table
     List<Map<String, dynamic>>? x =
         await db?.rawQuery('SELECT COUNT (*) FROM $contactTable');

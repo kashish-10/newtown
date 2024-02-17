@@ -20,23 +20,23 @@ class TContact {
   }
 
   //Setters
-  set number(String newNumber) => this._number = newNumber;
-  set name(String newName) => this._name = newName;
+  set number(String newNumber) => _number = newNumber;
+  set name(String newName) => _name = newName;
 
   //converting contact obj to map obj
   Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-    map['id'] = this._id;
-    map['number'] = this._number;
-    map['name'] = this._name;
+    var map = <String, dynamic>{};
+    map['id'] = _id;
+    map['number'] = _number;
+    map['name'] = _name;
 
     return map;
   }
 
   //Extract from map
   TContact.fromMapObject(Map<String, dynamic> map) {
-    this._id = map['id'];
-    this._number = map['number'];
-    this._name = map['name'];
+    _id = map['id'];
+    _number = map['number'];
+    _name = map['name'];
   }
 }

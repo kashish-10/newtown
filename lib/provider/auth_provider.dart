@@ -84,11 +84,9 @@ class AuthProvider extends ChangeNotifier {
           verificationId: verificationId, smsCode: userOtp);
       User? user = (await _firebaseAuth.signInWithCredential(creds)).user!;
 
-      if (user != null) {
-        _uid = user.uid;
-        onSuccess();
-      }
-      _isLoading = false;
+      _uid = user.uid;
+      onSuccess();
+          _isLoading = false;
       notifyListeners();
     } on FirebaseAuthException catch (e) {
       showSnackBar(context, e.message.toString());
