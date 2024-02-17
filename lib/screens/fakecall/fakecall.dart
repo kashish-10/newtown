@@ -24,11 +24,9 @@ class _FakeCallPageState extends State<FakeCallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page'),
+        title: Text('Fake Call'),
       ),
-      body: Center(
-        child: Text('Your home page content here'),
-      ),
+      body: Center(),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           _assetsAudioPlayer.open(Audio('assets/ringtone.mp3'));

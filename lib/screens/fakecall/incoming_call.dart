@@ -10,12 +10,12 @@ class IncomingCallPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.black54,
+        color: Colors.black,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
+              SizedBox(height: 8),
               CircleAvatar(
                 radius: 50,
                 backgroundImage: NetworkImage(
@@ -40,27 +40,22 @@ class IncomingCallPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 40,
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 100),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.phone,
                     color: Colors.white,
                     size: 40,
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 80),
                   Icon(
                     Icons.mic_off,
                     color: Colors.white,
                     size: 40,
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 80),
                   Icon(
                     Icons.bluetooth,
                     color: Colors.white,
@@ -68,22 +63,22 @@ class IncomingCallPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 60),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
                     Icons.pause,
                     color: Colors.white,
                     size: 40,
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 80),
                   Icon(
                     Icons.dialpad,
                     color: Colors.white,
                     size: 40,
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 90),
                   Icon(
                     Icons.volume_up,
                     color: Colors.white,
@@ -91,8 +86,8 @@ class IncomingCallPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
-              Expanded(
+              SizedBox(height: 100),
+              SizedBox(
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: IconButton(
