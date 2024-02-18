@@ -9,6 +9,7 @@ import 'package:background_sms/background_sms.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:diva/db/db_services.dart';
 import 'package:diva/model/contacts_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -107,25 +108,26 @@ class _HomePage extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Padding(
-                padding: EdgeInsets.only(right: 240.0),
+                padding: EdgeInsets.only(right: 230.0),
                 child: Text(
                   'Emergency',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.explore),
+                icon: const Icon(Icons.explore, size: 32),
                 onPressed: () {
                   // Implement the functionality for explorer icon tap
                   // For now, it just shows a toast message
                   // Fluttertoast.showToast(msg: 'Explorer icon tapped!');
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage()),
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()),
                   );
                 },
               ),
@@ -139,26 +141,95 @@ class _HomePage extends State<HomePage> {
           children: [
             const EmergencyCarousel(),
             const Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(top: 16.0, bottom: 8.0, left: 15.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Nearby Safe Places',
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 25,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ),
             ),
             const NearbySafePlaces(),
-            const SizedBox(height: 20),
+            const Padding(
+              padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 15.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Get home safe',
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
             ElevatedButton(
-              onPressed: () {
-                getAndSendSms();
+              onPressed: () async {},
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(400, 200), // Width and height adjusted
+                backgroundColor: Colors.purple.shade500,
+                shape: RoundedRectangleBorder(
+                  borderRadius:
+                      BorderRadius.circular(20), // Adjust the radius as needed
+                ), // Background color set to green
+              ),
+              child: const Text(
+                'Get the safest route while you travel',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white, // Text color set to black
+                  fontSize: 35, // Increase text size
+                  fontWeight: FontWeight.bold, // Make text bold
+                ), // Text color set to black
+              ),
+            ),
+            const SizedBox(height: 30),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'Need any suggestions',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 5),
+            ElevatedButton(
+              onPressed: () async {
+                try {
+                  await launch(
+                      "https://65d1ee4a91a5a729bbed22ef--thunderous-hamster-9b8cd9.netlify.app/");
+                } catch (e) {
+                  print(e);
+                  Fluttertoast.showToast(
+                      msg: "Something went wrong! Cannot open DivaBot");
+                }
               },
-              child: const Text('Send location!'),
+              style: ElevatedButton.styleFrom(
+                fixedSize: const Size(400, 65), // Width and height adjusted
+                backgroundColor:
+                    Colors.green.shade600, // Background color set to green
+              ),
+              child: const Text(
+                'Chat with Diva Bot',
+                style: TextStyle(
+                  color: Colors.white, // Text color set to black
+                  fontSize: 35, // Increase text size
+                  fontWeight: FontWeight.bold, // Make text bold
+                ), // Text color set to black
+              ),
             ),
           ],
         ),

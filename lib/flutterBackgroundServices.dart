@@ -110,7 +110,7 @@ void onStart(ServiceInstance service) async {
               }
               String messageBody =
                   "https://maps.google.com/?daddr=${currentPosition.latitude},${currentPosition.longitude}";
-              sendMessage(messageBody);
+              sendMessage("Locate me here $messageBody");
             });
 
         flutterLocalNotificationsPlugin.show(
