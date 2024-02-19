@@ -14,13 +14,13 @@ import 'package:vibration/vibration.dart';
 sendMessage(String messageBody) async {
   List<TContact> contactList = await DatabaseHelper().getContactList();
   if (contactList.isEmpty) {
-    Fluttertoast.showToast(msg: "no number exist please add a number");
+    Fluttertoast.showToast(msg: "No emergency contact exists");
   } else {
     for (var i = 0; i < contactList.length; i++) {
       Telephony.backgroundInstance
           .sendSms(to: contactList[i].number, message: messageBody)
           .then((value) {
-        Fluttertoast.showToast(msg: "message send");
+        Fluttertoast.showToast(msg: "Message Sent");
       });
     }
   }
@@ -30,8 +30,8 @@ Future<void> initializeService() async {
   final service = FlutterBackgroundService();
   AndroidNotificationChannel channel = const AndroidNotificationChannel(
     "Diva Guard",
-    "foreground service",
-    description: "used for imp notifcation",
+    "Foreground Service",
+    description: "used for imp notification",
     importance: Importance.high,
   );
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -49,7 +49,7 @@ Future<void> initializeService() async {
         isForegroundMode: true,
         autoStart: true,
         notificationChannelId: "Diva Guard",
-        initialNotificationTitle: "foregrounf service",
+        initialNotificationTitle: "Foreground Service",
         initialNotificationContent: "initializing",
         foregroundServiceNotificationId: 888,
       ));
@@ -84,7 +84,7 @@ void onStart(ServiceInstance service) async {
                 forceAndroidLocationManager: true)
             .then((Position position) {
           currentPosition = position;
-          print("bg locations ${position.latitude}");
+          print("current location ${position.latitude} ${position.longitude}");
         }).catchError((e) {
           Fluttertoast.showToast(msg: e.toString());
         });
@@ -92,41 +92,42 @@ void onStart(ServiceInstance service) async {
         ShakeDetector.autoStart(
             shakeThresholdGravity: 7,
             shakeSlopTimeMS: 500,
-            shakeCountResetTime: 3000,
+            shakeCountResetTime: 2000,
             minimumShakeCount: 5,
             onPhoneShake: () async {
               if (await Vibration.hasVibrator() ?? false) {
-                print("Test 2");
+                // print("Test 2");
                 if (await Vibration.hasCustomVibrationsSupport() ?? false) {
-                  print("Test 3");
+                  // print("Test 3");
                   Vibration.vibrate(duration: 1000);
                 } else {
-                  print("Test 4");
+                  // print("Test 4");
                   Vibration.vibrate();
                   await Future.delayed(const Duration(milliseconds: 500));
                   Vibration.vibrate();
                 }
-                print("Test 5");
+                // print("Test 5");
               }
               String messageBody =
                   "https://maps.google.com/?daddr=${currentPosition.latitude},${currentPosition.longitude}";
               sendMessage("Locate me here $messageBody");
             });
-
-        flutterLocalNotificationsPlugin.show(
-          888,
-          "Diva Guard",
-          "shake feature enable",
-          const NotificationDetails(
-              android: AndroidNotificationDetails(
-            "Diva Gaurd",
-            "foreground service",
-            channelDescription: "used for imp notifcation",
-            icon: 'ic_bg_service_small',
-            ongoing: true,
-          )),
-        );
       }
     }
   });
+
+  flutterLocalNotificationsPlugin.show(
+    888,
+    "Diva Guard",
+    "Shake Feature enabled",
+    const NotificationDetails(
+        android: AndroidNotificationDetails(
+      "Diva Guard",
+      "Foreground Service",
+      channelDescription: "used for imp notification",
+      icon: 'ic_bg_service_small',
+      ongoing: true,
+      playSound: false,
+    )),
+  );
 }

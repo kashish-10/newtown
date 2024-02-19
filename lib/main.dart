@@ -1,6 +1,7 @@
 import "package:diva/flutterBackgroundServices.dart";
 import "package:diva/provider/auth_provider.dart";
 import "package:diva/screens/home_screen.dart";
+import "package:diva/screens/splash_screen.dart";
 import "package:diva/screens/welcome_screen.dart";
 import "package:firebase_core/firebase_core.dart";
 import "package:provider/provider.dart";
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
               if (snap.data!) {
                 return const HomePage();
               } else {
-                return const WelcomeScreen();
+                return SplashScreen();
               }
             } else {
               return Container(

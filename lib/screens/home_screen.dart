@@ -30,9 +30,9 @@ class _HomePage extends State<HomePage> {
         phoneNumber: phoneNumber, message: message, simSlot: 1);
     if (result == SmsStatus.sent) {
       print("Sent");
-      Fluttertoast.showToast(msg: "send");
+      Fluttertoast.showToast(msg: "Sent");
     } else {
-      Fluttertoast.showToast(msg: "failed");
+      Fluttertoast.showToast(msg: "Failed");
     }
   }
 
@@ -40,11 +40,11 @@ class _HomePage extends State<HomePage> {
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
-      Fluttertoast.showToast(msg: "Location permission are denied");
+      Fluttertoast.showToast(msg: "Location permission is denied");
       if (permission == LocationPermission.deniedForever) {
         await Geolocator.requestPermission();
         Fluttertoast.showToast(
-            msg: "Location permissions are permanently denied");
+            msg: "Location permission is permanently denied");
       }
     }
     Geolocator.getCurrentPosition(

@@ -1,14 +1,18 @@
+import 'package:diva/provider/auth_provider.dart';
 import 'package:diva/screens/add_contacts.dart';
 import 'package:diva/screens/fakecall/fakecall.dart';
 import 'package:diva/screens/location_update.dart';
 import 'package:diva/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -61,7 +65,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 8),
                 Divider(color: Colors.grey),
               ],
             ),
@@ -123,10 +127,20 @@ class SettingsPage extends StatelessWidget {
           ),
           const Divider(color: Colors.grey),
           ListTile(
+            leading: const Icon(Icons.shopping_bag_rounded),
+            title: const Text('Buy Safety Products'),
+            onTap: () async {
+              // Add logout functionality here
+              await launch("https://www.divasfordefense.com/");
+            },
+          ),
+          const Divider(color: Colors.grey),
+          ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
             onTap: () {
               // Add logout functionality here
+              // ap.userSignOut();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const WelcomeScreen()),
@@ -168,21 +182,21 @@ class SettingsPage extends StatelessWidget {
 //   }
 // }
 
-class SafeShakePage extends StatelessWidget {
-  const SafeShakePage({super.key});
+// class SafeShakePage extends StatelessWidget {
+//   const SafeShakePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Safe Shake'),
-      ),
-      body: const Center(
-        child: Text('Safe Shake Page'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Safe Shake'),
+//       ),
+//       body: const Center(
+//         child: Text('Safe Shake Page'),
+//       ),
+//     );
+//   }
+// }
 
 class SafeAudioPage extends StatelessWidget {
   const SafeAudioPage({super.key});

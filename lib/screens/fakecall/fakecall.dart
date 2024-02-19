@@ -16,27 +16,63 @@ class _FakeCallPageState extends State<FakeCallPage> {
 
   @override
   void initState() {
-    super.initState();
     _assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
+    super.initState();
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     appBar: AppBar(
+  //       title: Text('Fake Call'),
+  //     ),
+  //     body: Center(),
+  //     floatingActionButton: FloatingActionButton(
+  //       onPressed: () async {
+  //         _assetsAudioPlayer.open(Audio('assets/ringtone.mp3'));
+  //         Navigator.push(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (context) => IncomingCallPage(_assetsAudioPlayer)),
+  //         );
+  //       },
+  //       child: const Text('call me'),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fake Call'),
+        title: Text('1nstagram'),
       ),
-      body: Center(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          _assetsAudioPlayer.open(Audio('assets/ringtone.mp3'));
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => IncomingCallPage(_assetsAudioPlayer)),
-          );
-        },
-        child: const Text('call me'),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // Background Image
+          Image.asset(
+            'assets/background_image.jpg',
+            fit: BoxFit.cover,
+          ),
+          // "Call Me" Button
+          Positioned(
+            bottom: 16.0,
+            right: 16.0,
+            child: FloatingActionButton(
+              onPressed: () async {
+                _assetsAudioPlayer.open(Audio('assets/ringtone.mp3'));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IncomingCallPage(_assetsAudioPlayer),
+                  ),
+                );
+              },
+              child: const Text('call me'),
+            ),
+          ),
+        ],
       ),
     );
   }
