@@ -80,7 +80,7 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
     // String messageBody = "https://maps.google.com/?daddr=25.7821353,84.7102497";
     if (await _isPermissionGranted()) {
       for (var element in contactList) {
-        _sendSms(element.number, "I am in trouble $messageBody");
+        _sendSms(element.number, "Locate me here: $messageBody");
       }
       // _sendSms(recipients, "I am in trouble $messageBody");
     } else {

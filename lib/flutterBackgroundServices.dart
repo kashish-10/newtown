@@ -74,47 +74,48 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  Timer.periodic(const Duration(seconds: 2), (timer) async {
-    late Position currentPosition;
+  // Timer.periodic(const Duration(seconds: 2), (timer) async {
+  late Position currentPosition;
 
-    if (service is AndroidServiceInstance) {
-      if (await service.isForegroundService()) {
-        await Geolocator.getCurrentPosition(
-                desiredAccuracy: LocationAccuracy.high,
-                forceAndroidLocationManager: true)
-            .then((Position position) {
-          currentPosition = position;
-          print("current location ${position.latitude} ${position.longitude}");
-        }).catchError((e) {
-          Fluttertoast.showToast(msg: e.toString());
-        });
+  if (service is AndroidServiceInstance) {
+    if (await service.isForegroundService()) {
+      await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.high,
+              forceAndroidLocationManager: true)
+          .then((Position position) {
+        currentPosition = position;
+        print("current location ${position.latitude} ${position.longitude}");
+      }).catchError((e) {
+        Fluttertoast.showToast(msg: e.toString());
+      });
 
-        ShakeDetector.autoStart(
-            shakeThresholdGravity: 7,
-            shakeSlopTimeMS: 500,
-            shakeCountResetTime: 2000,
-            minimumShakeCount: 5,
-            onPhoneShake: () async {
-              if (await Vibration.hasVibrator() ?? false) {
-                // print("Test 2");
-                if (await Vibration.hasCustomVibrationsSupport() ?? false) {
-                  // print("Test 3");
-                  Vibration.vibrate(duration: 1000);
-                } else {
-                  // print("Test 4");
-                  Vibration.vibrate();
-                  await Future.delayed(const Duration(milliseconds: 500));
-                  Vibration.vibrate();
-                }
-                // print("Test 5");
+      ShakeDetector.autoStart(
+          shakeThresholdGravity: 7,
+          shakeSlopTimeMS: 500,
+          shakeCountResetTime: 2000,
+          minimumShakeCount: 5,
+          onPhoneShake: () async {
+            if (await Vibration.hasVibrator() ?? false) {
+              // print("Test 2");
+              if (await Vibration.hasCustomVibrationsSupport() ?? false) {
+                // print("Test 3");
+                Vibration.vibrate(duration: 1000);
+              } else {
+                // print("Test 4");
+                Vibration.vibrate();
+                await Future.delayed(const Duration(milliseconds: 500));
+                Vibration.vibrate();
               }
-              String messageBody =
-                  "https://maps.google.com/?daddr=${currentPosition.latitude},${currentPosition.longitude}";
-              sendMessage("Locate me here $messageBody");
-            });
-      }
+              // print("Test 5");
+            }
+            String messageBody =
+                "https://maps.google.com/?daddr=${currentPosition.latitude},${currentPosition.longitude}";
+            sendMessage("I am in trouble, Locate me here: $messageBody");
+          });
     }
-  });
+  }
+
+  // });
 
   flutterLocalNotificationsPlugin.show(
     888,
