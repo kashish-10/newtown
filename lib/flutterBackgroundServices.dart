@@ -1,5 +1,3 @@
-import 'dart:async';
-// import 'dart:ui';
 import 'package:diva/db/db_services.dart';
 import 'package:diva/model/contacts_model.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';

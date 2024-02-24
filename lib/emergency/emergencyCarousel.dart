@@ -10,18 +10,17 @@ class EmergencyCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 90,
       width: MediaQuery.of(context).size.width,
-      height: 200,
       child: ListView(
-        physics: const BouncingScrollPhysics(),
-        scrollDirection: Axis.horizontal,
-        children: const [
-          PoliceEmergency(),
-          AmbulanceEmergency(),
-          FireEmergency(),
-          ArmyEmergency()
-        ],
-      ),
+          scrollDirection: Axis.horizontal,
+          physics: const BouncingScrollPhysics(),
+          children: const [
+            PoliceEmergency(),
+            AmbulanceEmergency(),
+            FireEmergency(),
+            ArmyEmergency()
+          ]),
     );
   }
 }

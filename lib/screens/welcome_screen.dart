@@ -42,7 +42,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ),
                 ),
                 const SizedBox(height: 5),
-                //custom button
+                // custom button
                 SizedBox(
                   width: 300, // Set the desired width here
                   height: 40,

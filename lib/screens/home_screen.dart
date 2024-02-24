@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:diva/screens/fakecall/fakecall.dart';
 import 'package:diva/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:diva/emergency/emergencyCarousel.dart';
@@ -22,6 +25,51 @@ class _HomePage extends State<HomePage> {
   late Position _currentPosition;
   String? _currentAddress;
   LocationPermission? permission;
+
+  int _selectedIndex = 0;
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      // Handle tap events based on the index here
+      switch (index) {
+        case 0:
+          // Handle Home icon tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomePage()),
+          );
+          break;
+        case 1:
+          // Handle Search icon tapped
+          _launchURL(context, "https://www.divasfordefense.com/");
+
+          break;
+        case 2:
+          // Handle Notification icon tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FakeCallPage()),
+          );
+          break;
+        case 3:
+          // Handle Profile icon tapped
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SettingsPage()),
+          );
+          break;
+      }
+    });
+  }
+
+  void _launchURL(BuildContext context, String url) async {
+    try {
+      await launch(url);
+    } catch (e) {
+      print('Error launching URL: $e');
+      // Handle the error as needed, e.g., show a snackbar or dialog to the user
+    }
+  }
 
   _getPermission() async => await [Permission.sms].request();
   _isPermissionGranted() async => await Permission.sms.status.isGranted;
@@ -91,6 +139,14 @@ class _HomePage extends State<HomePage> {
     }
   }
 
+  void startTimelyLocationUpdates() {
+    // Start timer to call getAndSendSms function every 15 minutes
+    getAndSendSms();
+    Timer.periodic(const Duration(minutes: 15), (timer) {
+      getAndSendSms();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -101,138 +157,223 @@ class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.purple[100],
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(right: 230.0),
-                child: Text(
-                  'Emergency',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
+      body: Padding(
+        padding: const EdgeInsets.only(
+            top: 55.0, left: 20.0, right: 20.0, bottom: 30.0),
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    // Add your navigation logic or any action when the image is clicked
+                    Fluttertoast.showToast(
+                        msg: "Something went wrong! Cannot open DivaBot");
+                    // You can navigate to a new screen using Navigator, for example:
+                    // Navigator.push(context, MaterialPageRoute(builder: (context) => YourNewScreen()));
+                  },
+                  child: Image.asset(
+                    'assets/safest_route.png', // Replace with your actual image asset path
+                    width:
+                        double.infinity, // Make the image take the full width
+                    fit: BoxFit.cover, // Adjust the fit as needed
                   ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.explore, size: 32),
-                onPressed: () {
-                  // Implement the functionality for explorer icon tap
-                  // For now, it just shows a toast message
-                  // Fluttertoast.showToast(msg: 'Explorer icon tapped!');
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SettingsPage()),
-                  );
-                },
-              ),
-            ],
+                const Padding(
+                  padding: EdgeInsets.only(top: 16.0, bottom: 8.0, left: 0.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Emergency Contacts',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                const EmergencyCarousel(),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.purple[50],
+                      borderRadius: BorderRadius.circular(
+                          15) // Set your desired background color here
+                      ),
+                  child: Column(
+                    children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.only(top: 20.0, bottom: 5.0, left: 0.0),
+                        child: Align(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ' Share your Location',
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              // Handle click for the first container
+                              startTimelyLocationUpdates();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                children: [
+                                  Image.asset(
+                                      'assets/fluent_timer-32-regular.png'),
+                                  const SizedBox(height: 8.0),
+                                  const Text(
+                                    'Every 15 minutes',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                              width:
+                                  16.0), // Adjust the spacing between the containers as needed
+                          InkWell(
+                            onTap: () {
+                              // Handle click for the second container
+                              getAndSendSms();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Column(
+                                children: [
+                                  Image.asset('assets/location_black.png'),
+                                  const SizedBox(height: 8.0),
+                                  const Text(
+                                    'Send current location',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(top: 16.0, bottom: 8.0, left: 0.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Nearby Safe Places',
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                const NearbySafePlaces(),
+                const SizedBox(
+                  height: 5,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Image.asset(
+                            'assets/chatbot1.png',
+                            fit: BoxFit.cover,
+                            height: 150,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Container(
+                            color: Colors.white,
+                            child: Center(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  try {
+                                    await launch(
+                                        "https://65d1ee4a91a5a729bbed22ef--thunderous-hamster-9b8cd9.netlify.app/");
+                                  } catch (e) {
+                                    Fluttertoast.showToast(
+                                        msg:
+                                            "Something went wrong! Cannot open DivaBot");
+                                  }
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                    Colors.green.shade600,
+                                  ),
+                                  fixedSize: MaterialStateProperty.all<Size>(
+                                    const Size(400, 65),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Chat with Diva Bot',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: [
+          BottomNavigationBarItem(
+            icon: Image.asset('assets/home.png', width: 24, height: 24),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset('assets/store.png', width: 24, height: 24),
+            label: 'Store',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset('assets/fake_call.png', width: 24, height: 24),
+            label: 'Fake Call',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset('assets/settings.png', width: 24, height: 24),
+            label: 'Settings',
           ),
         ],
-      ),
-      body: Container(
-        color: Colors.purple[100],
-        child: Column(
-          children: [
-            const EmergencyCarousel(),
-            const Padding(
-              padding: EdgeInsets.only(top: 16.0, bottom: 8.0, left: 15.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Nearby Safe Places',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const NearbySafePlaces(),
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 15.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Get home safe',
-                  style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            ElevatedButton(
-              onPressed: () async {},
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(400, 200), // Width and height adjusted
-                backgroundColor: Colors.purple.shade500,
-                shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(20), // Adjust the radius as needed
-                ), // Background color set to green
-              ),
-              child: const Text(
-                'Get the safest route while you travel',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.white, // Text color set to black
-                  fontSize: 35, // Increase text size
-                  fontWeight: FontWeight.bold, // Make text bold
-                ), // Text color set to black
-              ),
-            ),
-            const SizedBox(height: 30),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Need any suggestions',
-                  style: TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await launch(
-                      "https://65d1ee4a91a5a729bbed22ef--thunderous-hamster-9b8cd9.netlify.app/");
-                } catch (e) {
-                  print(e);
-                  Fluttertoast.showToast(
-                      msg: "Something went wrong! Cannot open DivaBot");
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size(400, 65), // Width and height adjusted
-                backgroundColor:
-                    Colors.green.shade600, // Background color set to green
-              ),
-              child: const Text(
-                'Chat with Diva Bot',
-                style: TextStyle(
-                  color: Colors.white, // Text color set to black
-                  fontSize: 35, // Increase text size
-                  fontWeight: FontWeight.bold, // Make text bold
-                ), // Text color set to black
-              ),
-            ),
-          ],
-        ),
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }

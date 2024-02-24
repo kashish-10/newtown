@@ -45,7 +45,7 @@ class SettingsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'John Doe',
+                          'Kriti Thawaria',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
@@ -82,40 +82,6 @@ class SettingsPage extends StatelessWidget {
           ),
           const Divider(color: Colors.grey),
           ListTile(
-            leading: const Icon(Icons.location_on),
-            title: const Text('Timely Location Update'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const TimelyLocationUpdatePage()),
-              );
-            },
-          ),
-          const Divider(color: Colors.grey),
-          ListTile(
-            leading: const Icon(Icons.volume_up),
-            title: const Text('Safe Audio'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SafeAudioPage()),
-              );
-            },
-          ),
-          const Divider(color: Colors.grey),
-          ListTile(
-            leading: const Icon(Icons.phone),
-            title: const Text('Fake Call'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FakeCallPage()),
-              );
-            },
-          ),
-          const Divider(color: Colors.grey),
-          ListTile(
             leading: const Icon(Icons.power_settings_new),
             title: const Text('Trigger'),
             onTap: () {
@@ -123,15 +89,6 @@ class SettingsPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => const TriggerPage()),
               );
-            },
-          ),
-          const Divider(color: Colors.grey),
-          ListTile(
-            leading: const Icon(Icons.shopping_bag_rounded),
-            title: const Text('Buy Safety Products'),
-            onTap: () async {
-              // Add logout functionality here
-              await launch("https://www.divasfordefense.com/");
             },
           ),
           const Divider(color: Colors.grey),
