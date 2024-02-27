@@ -5,6 +5,7 @@ import 'package:diva/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:diva/emergency/emergencyCarousel.dart';
 import 'package:diva/nearbySafePlaces/NearbySafePlaces.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -13,6 +14,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:diva/db/db_services.dart';
 import 'package:diva/model/contacts_model.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:speech_to_text/speech_recognition_result.dart';
+import 'package:speech_to_text/speech_to_text.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -25,6 +28,10 @@ class _HomePage extends State<HomePage> {
   late Position _currentPosition;
   String? _currentAddress;
   LocationPermission? permission;
+
+  SpeechToText _speechToText = SpeechToText();
+  bool _speechEnabled = false;
+  String _lastWords = '';
 
   int _selectedIndex = 0;
   void _onItemTapped(int index) {
@@ -141,10 +148,122 @@ class _HomePage extends State<HomePage> {
 
   void startTimelyLocationUpdates() {
     // Start timer to call getAndSendSms function every 15 minutes
+    var count = 0;
     getAndSendSms();
     Timer.periodic(const Duration(minutes: 15), (timer) {
       getAndSendSms();
+      count++;
+      if (count > 14) {
+        count = 0;
+        timer.cancel();
+      }
     });
+  }
+
+  void _initSpeech() async {
+    _speechEnabled = await _speechToText.initialize();
+    setState(() {});
+  }
+
+  void _startListening() async {
+    await _speechToText.listen(onResult: _onSpeechResult);
+    setState(() {});
+  }
+
+  void _stopListening() async {
+    await _speechToText.stop();
+    setState(() {});
+  }
+
+  void _onSpeechResult(SpeechRecognitionResult result) {
+    setState(() {
+      _lastWords = result.recognizedWords;
+      // Check if the recognized words contain the phrase "call police"
+      if (_lastWords.toLowerCase().contains('call police')) {
+        // Call your custom function when "call police" is detected
+        _callPolice();
+      } else if (_lastWords.toLowerCase().contains('call ambulance')) {
+        // Call your custom function when "call police" is detected
+        _callAmbulance();
+      } else if (_lastWords.toLowerCase().contains('call fire brigade')) {
+        // Call your custom function when "call police" is detected
+        _callFireBrigade();
+      } else if (_lastWords.toLowerCase().contains('call emergency helpline')) {
+        // Call your custom function when "call police" is detected
+        _callEmergency();
+      } else if (_lastWords.toLowerCase().contains('emergency emergency')) {
+        // Call your custom function when "call police" is detected
+        _callEmergency();
+      } else if (_lastWords.toLowerCase().contains('send sms')) {
+        // Call your custom function when "call police" is detected
+        getAndSendSms();
+      } else if (_lastWords.toLowerCase().contains('send timely sms')) {
+        // Call your custom function when "call police" is detected
+        startTimelyLocationUpdates();
+      } else if (_lastWords
+          .toLowerCase()
+          .contains('send timely location update')) {
+        // Call your custom function when "call police" is detected
+        startTimelyLocationUpdates();
+      } else if (_lastWords.toLowerCase().contains('give me a call')) {
+        // Call your custom function when "call police" is detected
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FakeCallPage()),
+        );
+      } else if (_lastWords.toLowerCase().contains('make a call')) {
+        // Call your custom function when "call police" is detected
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FakeCallPage()),
+        );
+      } else if (_lastWords.toLowerCase().contains('fake call')) {
+        // Call your custom function when "call police" is detected
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FakeCallPage()),
+        );
+      } else if (_lastWords.toLowerCase().contains('buy item')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('buy safety item')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('buy safety product')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('buy safety products')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('by item')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('by safety item')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('by safety product')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('by safety products')) {
+        _launchURL(context, "https://www.divasfordefense.com/");
+      } else if (_lastWords.toLowerCase().contains('chatbot')) {
+        _launchURL(context,
+            "https://65d1ee4a91a5a729bbed22ef--thunderous-hamster-9b8cd9.netlify.app/");
+      }
+    });
+  }
+
+  void _callPolice() async {
+    const number = '100'; //set the number here
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  void _callAmbulance() async {
+    const number = '108'; //set the number here
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  void _callFireBrigade() async {
+    const number = '101'; //set the number here
+    await FlutterPhoneDirectCaller.callNumber(number);
+  }
+
+  void _callEmergency() async {
+    const number = '112'; //set the number here
+    await FlutterPhoneDirectCaller.callNumber(number);
   }
 
   @override
@@ -152,6 +271,7 @@ class _HomePage extends State<HomePage> {
     super.initState();
     _getPermission();
     _getCurrentLocation();
+    _initSpeech();
   }
 
   @override
@@ -348,10 +468,40 @@ class _HomePage extends State<HomePage> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding:
+                      const EdgeInsets.only(top: 16.0, bottom: 8.0, left: 0.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      _speechToText.isListening
+                          ? '$_lastWords'
+                          // If listening isn't active but could be tell the user
+                          // how to start it, otherwise indicate that speech
+                          // recognition is not yet ready or not supported on
+                          // the target device
+                          : _speechEnabled
+                              ? 'Tap the microphone to start listening...'
+                              : 'Speech not available',
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed:
+            // If not yet listening for speech start, otherwise stop
+            _speechToText.isNotListening ? _startListening : _stopListening,
+        tooltip: 'Listen',
+        child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
