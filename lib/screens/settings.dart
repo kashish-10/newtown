@@ -31,8 +31,7 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 30,
-                      backgroundImage: NetworkImage(
-                          'https://media.istockphoto.com/vectors/purple-user-icon-in-the-circle-a-solid-gradient-vector-id1095289632?k=20&m=1095289632&s=612x612&w=0&h=_glHdsV95Q3uZHTpFNIeaJpzGMpy6fplJP5G6YUgfmk='),
+                      backgroundImage: NetworkImage('assets/profile.jpg'),
                     ),
                     // Positioned(
                     //   child: IconButton(
@@ -53,7 +52,7 @@ class SettingsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          '(+91) 123 456 7890',
+                          '+91 8278681942',
                           style: TextStyle(fontSize: 16),
                         ),
                         SizedBox(height: 4),
@@ -80,17 +79,17 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          const Divider(color: Colors.grey),
-          ListTile(
-            leading: const Icon(Icons.power_settings_new),
-            title: const Text('Trigger'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const TriggerPage()),
-              );
-            },
-          ),
+          // const Divider(color: Colors.grey),
+          // ListTile(
+          //   leading: const Icon(Icons.power_settings_new),
+          //   title: const Text('Trigger'),
+          //   onTap: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(builder: (context) => const TriggerPage()),
+          //     );
+          //   },
+          // ),
           const Divider(color: Colors.grey),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
@@ -187,21 +186,21 @@ class SafeAudioPage extends StatelessWidget {
 //   }
 // }
 
-class TriggerPage extends StatelessWidget {
-  const TriggerPage({super.key});
+// class TriggerPage extends StatelessWidget {
+//   const TriggerPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Trigger'),
-      ),
-      body: const Center(
-        child: Text('Trigger Page'),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Trigger'),
+//       ),
+//       body: const Center(
+//         child: Text('Trigger Page'),
+//       ),
+//     );
+//   }
+// }
 
 void main() {
   runApp(MaterialApp(
@@ -209,3 +208,74 @@ void main() {
     home: const SettingsPage(),
   ));
 }
+
+// import 'package:diva/provider/auth_provider.dart';
+// import 'package:diva/screens/add_contacts.dart';
+// import 'package:diva/screens/welcome_screen.dart';
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+
+// class SettingsPage extends StatefulWidget {
+//   const SettingsPage({Key? key}) : super(key: key);
+
+//   @override
+//   _SettingsPageState createState() => _SettingsPageState();
+// }
+
+// class _SettingsPageState extends State<SettingsPage> {
+//   @override
+//   Widget build(BuildContext context) {
+//     final ap = Provider.of<AuthProvider>(context, listen: false);
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text(
+//           'Settings',
+//           style: TextStyle(fontWeight: FontWeight.bold),
+//         ),
+//       ),
+//       body: Column(
+//         children: [
+//           Container(
+//             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+//             child: const Column(
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 // Your profile information
+//               ],
+//             ),
+//           ),
+//           ListTile(
+//             leading: const Icon(Icons.contacts),
+//             title: const Text('Edit Emergency Contacts'),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => const AddContacts()),
+//               );
+//             },
+//           ),
+//           const Divider(color: Colors.grey),
+//           ListTile(
+//             leading: const Icon(Icons.exit_to_app),
+//             title: const Text('Logout'),
+//             onTap: () {
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+//               );
+//             },
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+  // void _signOut(BuildContext context) async {
+  //   final ap = Provider.of<AuthProvider>(context, listen: false);
+  //   await ap.userSignOut();
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(builder: (context) => const WelcomeScreen()),
+  //   );
+  // }
+// }

@@ -23,19 +23,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: HomePage(),
-        title: "DivaGuard",
-      ),
-    );
-  }
   // @override
   // Widget build(BuildContext context) {
   //   return MultiProvider(
@@ -44,42 +31,55 @@ class MyApp extends StatelessWidget {
   //     ],
   //     child: MaterialApp(
   //       debugShowCheckedModeBanner: false,
-  //       title: 'Diva Guard',
-  //       theme: ThemeData(
-  //         fontFamily: GoogleFonts.poppins().fontFamily,
-  //         primarySwatch: Colors.blue,
-  //       ),
-  //       home: FutureBuilder(
-  //         future: isAppOpeningForFirstTime(),
-  //         builder: (context, AsyncSnapshot<bool?> snap) {
-  //           if (snap.connectionState == ConnectionState.waiting) {
-  //             return Container(
-  //               color: Colors.white,
-  //             );
-  //           }
-  //           if (snap.hasData && snap.data != null) {
-  //             if (snap.data!) {
-  //               return HomePage();
-  //             } else {
-  //               return SplashScreen();
-  //             }
-  //           } else {
-  //             return Container(
-  //               color: Colors.white,
-  //             );
-  //           }
-  //         },
-  //       ),
+  //       home: HomePage(),
+  //       title: "DivaGuard",
   //     ),
   //   );
   // }
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Diva Guard',
+        theme: ThemeData(
+          fontFamily: GoogleFonts.poppins().fontFamily,
+          primarySwatch: Colors.blue,
+        ),
+        home: FutureBuilder(
+          future: isAppOpeningForFirstTime(),
+          builder: (context, AsyncSnapshot<bool?> snap) {
+            if (snap.connectionState == ConnectionState.waiting) {
+              return Container(
+                color: Colors.white,
+              );
+            }
+            if (snap.hasData && snap.data != null) {
+              if (snap.data!) {
+                return HomePage();
+              } else {
+                return SplashScreen();
+              }
+            } else {
+              return Container(
+                color: Colors.white,
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
 
-  // Future<bool> isAppOpeningForFirstTime() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool result = prefs.getBool("appOpenedBefore") ?? false;
-  //   if (!result) {
-  //     prefs.setBool("appOpenedBefore", true);
-  //   }
-  //   return result;
-  // }
+  Future<bool> isAppOpeningForFirstTime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool result = prefs.getBool("appOpenedBefore") ?? false;
+    if (!result) {
+      prefs.setBool("appOpenedBefore", true);
+    }
+    return result;
+  }
 }

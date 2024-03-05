@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:diva/screens/fakecall/fakecall.dart';
+import 'package:diva/screens/safest_route_form.dart';
 import 'package:diva/screens/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:diva/emergency/emergencyCarousel.dart';
@@ -287,17 +288,16 @@ class _HomePage extends State<HomePage> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Add your navigation logic or any action when the image is clicked
-                    Fluttertoast.showToast(
-                        msg: "Something went wrong! Cannot open DivaBot");
-                    // You can navigate to a new screen using Navigator, for example:
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) => YourNewScreen()));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SafestRouteForm()),
+                    );
                   },
                   child: Image.asset(
-                    'assets/safest_route.png', // Replace with your actual image asset path
-                    width:
-                        double.infinity, // Make the image take the full width
-                    fit: BoxFit.cover, // Adjust the fit as needed
+                    'assets/safest_route.png',
+                    width: double.infinity,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const Padding(
@@ -373,7 +373,7 @@ class _HomePage extends State<HomePage> {
                               getAndSendSms();
                             },
                             child: Container(
-                              padding: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(6.0),
                               child: Column(
                                 children: [
                                   Image.asset('assets/location_black.png'),
@@ -416,7 +416,7 @@ class _HomePage extends State<HomePage> {
                 SizedBox(
                   width: double.infinity,
                   child: Container(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
                         Expanded(
@@ -424,11 +424,11 @@ class _HomePage extends State<HomePage> {
                           child: Image.asset(
                             'assets/chatbot1.png',
                             fit: BoxFit.cover,
-                            height: 150,
+                            height: 120,
                           ),
                         ),
                         Expanded(
-                          flex: 2,
+                          flex: 3,
                           child: Container(
                             color: Colors.white,
                             child: Center(
@@ -449,14 +449,14 @@ class _HomePage extends State<HomePage> {
                                     Colors.green.shade600,
                                   ),
                                   fixedSize: MaterialStateProperty.all<Size>(
-                                    const Size(400, 65),
+                                    const Size(380, 65),
                                   ),
                                 ),
                                 child: const Text(
                                   'Chat with Diva Bot',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

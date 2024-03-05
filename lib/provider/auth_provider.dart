@@ -31,6 +31,11 @@ class AuthProvider extends ChangeNotifier {
     checkSign();
   }
 
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // Future<void> userSignOut() async {
+  //   await _auth.signOut();
+  // }
+
   void checkSign() async {
     final SharedPreferences s = await SharedPreferences.getInstance();
     _isSignedIn = s.getBool("is_signedin") ?? false;
