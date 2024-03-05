@@ -37,10 +37,5 @@ class NearbySafePlaces extends StatelessWidget {
       Fluttertoast.showToast(
           msg: "Something went wrong! Call emergency numbers.");
     }
-    // if (await canLaunch(googleUrl)) {
-    //   await launch(googleUrl);
-    // } else {
-    //   throw 'Could not open the map.';
-    // }
   }
 }

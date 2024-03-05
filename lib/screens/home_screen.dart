@@ -132,16 +132,13 @@ class _HomePage extends State<HomePage> {
   }
 
   getAndSendSms() async {
-    // String recipients = "8278681942";
     List<TContact> contactList = await DatabaseHelper().getContactList();
     String messageBody =
         "https://maps.google.com/?daddr=${_currentPosition.latitude},${_currentPosition.longitude}";
-    // String messageBody = "https://maps.google.com/?daddr=25.7821353,84.7102497";
     if (await _isPermissionGranted()) {
       for (var element in contactList) {
         _sendSms(element.number, "I am in trouble $messageBody");
       }
-      // _sendSms(recipients, "I am in trouble $messageBody");
     } else {
       Fluttertoast.showToast(msg: "Something is wrong. Please try again.");
     }
@@ -179,47 +176,35 @@ class _HomePage extends State<HomePage> {
   void _onSpeechResult(SpeechRecognitionResult result) {
     setState(() {
       _lastWords = result.recognizedWords;
-      // Check if the recognized words contain the phrase "call police"
       if (_lastWords.toLowerCase().contains('call police')) {
-        // Call your custom function when "call police" is detected
         _callPolice();
       } else if (_lastWords.toLowerCase().contains('call ambulance')) {
-        // Call your custom function when "call police" is detected
         _callAmbulance();
       } else if (_lastWords.toLowerCase().contains('call fire brigade')) {
-        // Call your custom function when "call police" is detected
         _callFireBrigade();
       } else if (_lastWords.toLowerCase().contains('call emergency helpline')) {
-        // Call your custom function when "call police" is detected
         _callEmergency();
       } else if (_lastWords.toLowerCase().contains('emergency emergency')) {
-        // Call your custom function when "call police" is detected
         _callEmergency();
       } else if (_lastWords.toLowerCase().contains('send sms')) {
-        // Call your custom function when "call police" is detected
         getAndSendSms();
       } else if (_lastWords.toLowerCase().contains('send timely sms')) {
-        // Call your custom function when "call police" is detected
         startTimelyLocationUpdates();
       } else if (_lastWords
           .toLowerCase()
           .contains('send timely location update')) {
-        // Call your custom function when "call police" is detected
         startTimelyLocationUpdates();
       } else if (_lastWords.toLowerCase().contains('give me a call')) {
-        // Call your custom function when "call police" is detected
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => FakeCallPage()),
         );
       } else if (_lastWords.toLowerCase().contains('make a call')) {
-        // Call your custom function when "call police" is detected
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => FakeCallPage()),
         );
       } else if (_lastWords.toLowerCase().contains('fake call')) {
-        // Call your custom function when "call police" is detected
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => FakeCallPage()),
@@ -476,10 +461,6 @@ class _HomePage extends State<HomePage> {
                     child: Text(
                       _speechToText.isListening
                           ? '$_lastWords'
-                          // If listening isn't active but could be tell the user
-                          // how to start it, otherwise indicate that speech
-                          // recognition is not yet ready or not supported on
-                          // the target device
                           : _speechEnabled
                               ? 'Tap the microphone to start listening...'
                               : 'Speech not available',

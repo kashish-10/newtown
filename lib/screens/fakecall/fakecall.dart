@@ -20,27 +20,6 @@ class _FakeCallPageState extends State<FakeCallPage> {
     super.initState();
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Fake Call'),
-  //     ),
-  //     body: Center(),
-  //     floatingActionButton: FloatingActionButton(
-  //       onPressed: () async {
-  //         _assetsAudioPlayer.open(Audio('assets/ringtone.mp3'));
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //               builder: (context) => IncomingCallPage(_assetsAudioPlayer)),
-  //         );
-  //       },
-  //       child: const Text('call me'),
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

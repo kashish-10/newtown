@@ -107,12 +107,6 @@ class _ContactsPageState extends State<ContactsPage> {
     });
   }
 
-  // Future getContacts() async {
-  //   final contacts = await ContactsService.getContacts();
-  //   print(contacts.length);
-  //   emit(contacts);
-  // }
-
   @override
   Widget build(BuildContext context) {
     bool isSearching = searchController.text.isNotEmpty;

@@ -11,24 +11,6 @@ class BusStationCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20),
       child: Column(
         children: [
-          // Card(
-          //   elevation: 3,
-          //   shape:
-          //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          //   child: InkWell(
-          //     onTap: () {
-          //       openMapFunc("Bus stops near me");
-          //     },
-          //     child: SizedBox(
-          //         height: 50,
-          //         width: 50,
-          //         child: Center(
-          //             child: Image.asset(
-          //           "assets/bus-stop.png",
-          //           height: 32,
-          //         ))),
-          //   ),
-          // ),
           InkWell(
             onTap: () {
               openMapFunc("Bus stops near me");

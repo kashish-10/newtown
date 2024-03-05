@@ -162,6 +162,3 @@ class _OtpScreenState extends State<OtpScreen> {
     );
   }
 }
-
-//verify otp
-

@@ -11,24 +11,6 @@ class HospitalCard extends StatelessWidget {
       padding: const EdgeInsets.only(left: 20),
       child: Column(
         children: [
-          // Card(
-          //   elevation: 3,
-          //   shape:
-          //       RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          //   child: InkWell(
-          //     onTap: () {
-          //       openMapFunc("Hospitals near me");
-          //     },
-          //     child: SizedBox(
-          //         height: 50,
-          //         width: 50,
-          //         child: Center(
-          //             child: Image.asset(
-          //           "assets/hospital.png",
-          //           height: 32,
-          //         ))),
-          //   ),
-          // ),
           InkWell(
             onTap: () {
               openMapFunc("Hospitals near me");

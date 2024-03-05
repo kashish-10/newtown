@@ -73,16 +73,13 @@ class _TimelyLocationUpdatePageState extends State<TimelyLocationUpdatePage> {
   }
 
   getAndSendSms() async {
-    // String recipients = "8278681942";
     List<TContact> contactList = await DatabaseHelper().getContactList();
     String messageBody =
         "https://maps.google.com/?daddr=${_currentPosition!.latitude},${_currentPosition!.longitude}";
-    // String messageBody = "https://maps.google.com/?daddr=25.7821353,84.7102497";
     if (await _isPermissionGranted()) {
       for (var element in contactList) {
         _sendSms(element.number, "Locate me here: $messageBody");
       }
-      // _sendSms(recipients, "I am in trouble $messageBody");
     } else {
       Fluttertoast.showToast(msg: "Something is wrong. Please try again.");
     }

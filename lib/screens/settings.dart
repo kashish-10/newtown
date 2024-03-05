@@ -33,12 +33,6 @@ class SettingsPage extends StatelessWidget {
                       radius: 30,
                       backgroundImage: NetworkImage('assets/profile.jpg'),
                     ),
-                    // Positioned(
-                    //   child: IconButton(
-                    //     onPressed: () {},
-                    //     icon: Icon(Icons.add_a_photo),
-                    //   ),
-                    // ),
                     SizedBox(width: 20),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,24 +73,11 @@ class SettingsPage extends StatelessWidget {
               );
             },
           ),
-          // const Divider(color: Colors.grey),
-          // ListTile(
-          //   leading: const Icon(Icons.power_settings_new),
-          //   title: const Text('Trigger'),
-          //   onTap: () {
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(builder: (context) => const TriggerPage()),
-          //     );
-          //   },
-          // ),
           const Divider(color: Colors.grey),
           ListTile(
             leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
             onTap: () {
-              // Add logout functionality here
-              // ap.userSignOut();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const WelcomeScreen()),
@@ -108,51 +89,6 @@ class SettingsPage extends StatelessWidget {
     );
   }
 }
-
-// Sample pages for each feature
-// class EditEmergencyContactsPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Edit Emergency Contacts'),
-//       ),
-//       body: const Center(
-//         child: Text('Edit Emergency Contacts Page'),
-//       ),
-//     );
-//   }
-// }
-
-// class TimelyLocationUpdatePage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Timely Location Update'),
-//       ),
-//       body: const Center(
-//         child: Text('Timely Location Update Page'),
-//       ),
-//     );
-//   }
-// }
-
-// class SafeShakePage extends StatelessWidget {
-//   const SafeShakePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Safe Shake'),
-//       ),
-//       body: const Center(
-//         child: Text('Safe Shake Page'),
-//       ),
-//     );
-//   }
-// }
 
 class SafeAudioPage extends StatelessWidget {
   const SafeAudioPage({super.key});
@@ -170,112 +106,9 @@ class SafeAudioPage extends StatelessWidget {
   }
 }
 
-// class FakeCallPage extends StatelessWidget {
-//   const FakeCallPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Fake Call'),
-//       ),
-//       body: const Center(
-//         child: Text('Fake Call Page'),
-//       ),
-//     );
-//   }
-// }
-
-// class TriggerPage extends StatelessWidget {
-//   const TriggerPage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Trigger'),
-//       ),
-//       body: const Center(
-//         child: Text('Trigger Page'),
-//       ),
-//     );
-//   }
-// }
-
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(primarySwatch: Colors.purple),
     home: const SettingsPage(),
   ));
 }
-
-// import 'package:diva/provider/auth_provider.dart';
-// import 'package:diva/screens/add_contacts.dart';
-// import 'package:diva/screens/welcome_screen.dart';
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-
-// class SettingsPage extends StatefulWidget {
-//   const SettingsPage({Key? key}) : super(key: key);
-
-//   @override
-//   _SettingsPageState createState() => _SettingsPageState();
-// }
-
-// class _SettingsPageState extends State<SettingsPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final ap = Provider.of<AuthProvider>(context, listen: false);
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text(
-//           'Settings',
-//           style: TextStyle(fontWeight: FontWeight.bold),
-//         ),
-//       ),
-//       body: Column(
-//         children: [
-//           Container(
-//             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-//             child: const Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // Your profile information
-//               ],
-//             ),
-//           ),
-//           ListTile(
-//             leading: const Icon(Icons.contacts),
-//             title: const Text('Edit Emergency Contacts'),
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => const AddContacts()),
-//               );
-//             },
-//           ),
-//           const Divider(color: Colors.grey),
-//           ListTile(
-//             leading: const Icon(Icons.exit_to_app),
-//             title: const Text('Logout'),
-//             onTap: () {
-//               Navigator.push(
-//                 context,
-//                 MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-//               );
-//             },
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-  // void _signOut(BuildContext context) async {
-  //   final ap = Provider.of<AuthProvider>(context, listen: false);
-  //   await ap.userSignOut();
-  //   Navigator.pushReplacement(
-  //     context,
-  //     MaterialPageRoute(builder: (context) => const WelcomeScreen()),
-  //   );
-  // }
-// }

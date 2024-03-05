@@ -72,7 +72,6 @@ void onStart(ServiceInstance service) async {
     service.stopSelf();
   });
 
-  // Timer.periodic(const Duration(seconds: 2), (timer) async {
   late Position currentPosition;
 
   if (service is AndroidServiceInstance) {
@@ -112,8 +111,6 @@ void onStart(ServiceInstance service) async {
           });
     }
   }
-
-  // });
 
   flutterLocalNotificationsPlugin.show(
     888,
