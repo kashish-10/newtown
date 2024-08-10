@@ -65,7 +65,7 @@ class _SafestRouteFormState extends State<SafestRouteForm> {
   }
 
   Future<List<LatLng>> callApi(String startLocation, String endLocation) async {
-    final apiUrl = 'https://2e62-34-16-146-30.ngrok-free.app/safest_path';
+    final apiUrl = 'https://3761-34-106-129-114.ngrok-free.app/safest_path';
 
     final parameters = {
       'start_loc': startLocation,
